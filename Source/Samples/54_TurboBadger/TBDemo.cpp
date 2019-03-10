@@ -7,16 +7,16 @@
 // the rights to use, copy, modify, merge, publish, distribute, sublicense,
 // and/or sell copies of the Software, and to permit persons to whom the
 // Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 // THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 //
 //=============================================================================
@@ -307,7 +307,7 @@ bool ResourceEditWindow::OnDropFileEvent(const TBWidgetEvent &ev)
 // == AdvancedItemWidget ======================================================
 
 AdvancedItemWidget::AdvancedItemWidget(AdvancedItem *item, AdvancedItemSource *source,
-										TBSelectItemViewer *source_viewer, int index)
+	TBSelectItemViewer *source_viewer, int index)
 	: m_source(source)
 	, m_source_viewer(source_viewer)
 	, m_index(index)
@@ -507,126 +507,126 @@ bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
 // == EditWindow ==============================================================
 EditWindow::EditWindow(TBWidget *root) : DemoWindow(root)
 {
-    LoadResourceFile("demo01/ui_resources/test_textwindow.tb.txt");
+	LoadResourceFile("demo01/ui_resources/test_textwindow.tb.txt");
 }
 void EditWindow::OnProcessStates()
 {
-    // Update the disabled state of undo/redo buttons, and caret info.
+	// Update the disabled state of undo/redo buttons, and caret info.
 
-    if (TBEditField *edit = GetWidgetByIDAndType<TBEditField>(TBIDC("editfield")))
-    {
-        if (TBWidget *undo = GetWidgetByID("undo"))
-            undo->SetState(WIDGET_STATE_DISABLED, !edit->GetStyleEdit()->CanUndo());
-        if (TBWidget *redo = GetWidgetByID("redo"))
-            redo->SetState(WIDGET_STATE_DISABLED, !edit->GetStyleEdit()->CanRedo());
-        if (TBTextField *info = GetWidgetByIDAndType<TBTextField>(TBIDC("info")))
-        {
-            TBStr text;
-            text.SetFormatted("Caret ofs: %d", edit->GetStyleEdit()->caret.GetGlobalOfs());
-            info->SetText(text);
-        }
-    }
+	if (TBEditField *edit = GetWidgetByIDAndType<TBEditField>(TBIDC("editfield")))
+	{
+		if (TBWidget *undo = GetWidgetByID("undo"))
+			undo->SetState(WIDGET_STATE_DISABLED, !edit->GetStyleEdit()->CanUndo());
+		if (TBWidget *redo = GetWidgetByID("redo"))
+			redo->SetState(WIDGET_STATE_DISABLED, !edit->GetStyleEdit()->CanRedo());
+		if (TBTextField *info = GetWidgetByIDAndType<TBTextField>(TBIDC("info")))
+		{
+			TBStr text;
+			text.SetFormatted("Caret ofs: %d", edit->GetStyleEdit()->caret.GetGlobalOfs());
+			info->SetText(text);
+		}
+	}
 }
 bool EditWindow::OnEvent(const TBWidgetEvent &ev)
 {
-    if (ev.type == EVENT_TYPE_CLICK)
-    {
-        TBEditField *edit = GetWidgetByIDAndType<TBEditField>(TBIDC("editfield"));
-        if (!edit)
-            return false;
+	if (ev.type == EVENT_TYPE_CLICK)
+	{
+		TBEditField *edit = GetWidgetByIDAndType<TBEditField>(TBIDC("editfield"));
+		if (!edit)
+			return false;
 
-        if (ev.target->GetID() == TBIDC("clear"))
-        {
-            edit->SetText("");
-            return true;
-        }
-        else if (ev.target->GetID() == TBIDC("undo"))
-        {
-            edit->GetStyleEdit()->Undo();
-            return true;
-        }
-        else if (ev.target->GetID() == TBIDC("redo"))
-        {
-            edit->GetStyleEdit()->Redo();
-            return true;
-        }
-        else if (ev.target->GetID() == TBIDC("menu"))
-        {
-            static TBGenericStringItemSource source;
-            if (!source.GetNumItems())
-            {
-                source.AddItem(new TBGenericStringItem("Default font", TBIDC("default font")));
-                source.AddItem(new TBGenericStringItem("Default font (larger)", TBIDC("large font")));
-                source.AddItem(new TBGenericStringItem("RGB font (Neon)", TBIDC("rgb font Neon")));
-                source.AddItem(new TBGenericStringItem("RGB font (Orangutang)", TBIDC("rgb font Orangutang")));
-                source.AddItem(new TBGenericStringItem("RGB font (Orange)", TBIDC("rgb font Orange")));
-                source.AddItem(new TBGenericStringItem("-"));
-                source.AddItem(new TBGenericStringItem("Glyph cache stresstest (CJK)", TBIDC("CJK")));
-                source.AddItem(new TBGenericStringItem("-"));
-                source.AddItem(new TBGenericStringItem("Toggle wrapping", TBIDC("toggle wrapping")));
-                source.AddItem(new TBGenericStringItem("-"));
-                source.AddItem(new TBGenericStringItem("Align left", TBIDC("align left")));
-                source.AddItem(new TBGenericStringItem("Align center", TBIDC("align center")));
-                source.AddItem(new TBGenericStringItem("Align right", TBIDC("align right")));
-            }
+		if (ev.target->GetID() == TBIDC("clear"))
+		{
+			edit->SetText("");
+			return true;
+		}
+		else if (ev.target->GetID() == TBIDC("undo"))
+		{
+			edit->GetStyleEdit()->Undo();
+			return true;
+		}
+		else if (ev.target->GetID() == TBIDC("redo"))
+		{
+			edit->GetStyleEdit()->Redo();
+			return true;
+		}
+		else if (ev.target->GetID() == TBIDC("menu"))
+		{
+			static TBGenericStringItemSource source;
+			if (!source.GetNumItems())
+			{
+				source.AddItem(new TBGenericStringItem("Default font", TBIDC("default font")));
+				source.AddItem(new TBGenericStringItem("Default font (larger)", TBIDC("large font")));
+				source.AddItem(new TBGenericStringItem("RGB font (Neon)", TBIDC("rgb font Neon")));
+				source.AddItem(new TBGenericStringItem("RGB font (Orangutang)", TBIDC("rgb font Orangutang")));
+				source.AddItem(new TBGenericStringItem("RGB font (Orange)", TBIDC("rgb font Orange")));
+				source.AddItem(new TBGenericStringItem("-"));
+				source.AddItem(new TBGenericStringItem("Glyph cache stresstest (CJK)", TBIDC("CJK")));
+				source.AddItem(new TBGenericStringItem("-"));
+				source.AddItem(new TBGenericStringItem("Toggle wrapping", TBIDC("toggle wrapping")));
+				source.AddItem(new TBGenericStringItem("-"));
+				source.AddItem(new TBGenericStringItem("Align left", TBIDC("align left")));
+				source.AddItem(new TBGenericStringItem("Align center", TBIDC("align center")));
+				source.AddItem(new TBGenericStringItem("Align right", TBIDC("align right")));
+			}
 
-            if (TBMenuWindow *menu = new TBMenuWindow(ev.target, TBIDC("popup_menu")))
-                menu->Show(&source, TBPopupAlignment());
-            return true;
-        }
-        else if (ev.target->GetID() == TBIDC("popup_menu"))
-        {
-            if (ev.ref_id == TBIDC("default font"))
-                edit->SetFontDescription(TBFontDescription());
-            else if (ev.ref_id == TBIDC("large font"))
-            {
-                TBFontDescription fd = g_font_manager->GetDefaultFontDescription();
-                fd.SetSize(28);
-                edit->SetFontDescription(fd);
-            }
-            else if (ev.ref_id == TBIDC("rgb font Neon"))
-            {
-                TBFontDescription fd = edit->GetCalculatedFontDescription();
-                fd.SetID(TBIDC("Neon"));
-                edit->SetFontDescription(fd);
-            }
-            else if (ev.ref_id == TBIDC("rgb font Orangutang"))
-            {
-                TBFontDescription fd = edit->GetCalculatedFontDescription();
-                fd.SetID(TBIDC("Orangutang"));
-                edit->SetFontDescription(fd);
-            }
-            else if (ev.ref_id == TBIDC("rgb font Orange"))
-            {
-                TBFontDescription fd = edit->GetCalculatedFontDescription();
-                fd.SetID(TBIDC("Orange"));
-                edit->SetFontDescription(fd);
-            }
-            else if (ev.ref_id == TBIDC("CJK"))
-            {
-                TBTempBuffer buf;
-                for (int i = 0, cp = 0x4E00; cp <= 0x9FCC; cp++, i++)
-                {
-                    char utf8[8];
-                    int len = utf8::encode(cp, utf8);
-                    buf.Append(utf8, len);
-                    if (i % 64 == 63)
-                        buf.Append("\n", 1);
-                }
-                edit->GetStyleEdit()->SetText(buf.GetData(), buf.GetAppendPos());
-            }
-            else if (ev.ref_id == TBIDC("toggle wrapping"))
-                edit->SetWrapping(!edit->GetWrapping());
-            else if (ev.ref_id == TBIDC("align left"))
-                edit->SetTextAlign(TB_TEXT_ALIGN_LEFT);
-            else if (ev.ref_id == TBIDC("align center"))
-                edit->SetTextAlign(TB_TEXT_ALIGN_CENTER);
-            else if (ev.ref_id == TBIDC("align right"))
-                edit->SetTextAlign(TB_TEXT_ALIGN_RIGHT);
-            return true;
-        }
-    }
-    return DemoWindow::OnEvent(ev);
+			if (TBMenuWindow *menu = new TBMenuWindow(ev.target, TBIDC("popup_menu")))
+				menu->Show(&source, TBPopupAlignment());
+			return true;
+		}
+		else if (ev.target->GetID() == TBIDC("popup_menu"))
+		{
+			if (ev.ref_id == TBIDC("default font"))
+				edit->SetFontDescription(TBFontDescription());
+			else if (ev.ref_id == TBIDC("large font"))
+			{
+				TBFontDescription fd = g_font_manager->GetDefaultFontDescription();
+				fd.SetSize(28);
+				edit->SetFontDescription(fd);
+			}
+			else if (ev.ref_id == TBIDC("rgb font Neon"))
+			{
+				TBFontDescription fd = edit->GetCalculatedFontDescription();
+				fd.SetID(TBIDC("Neon"));
+				edit->SetFontDescription(fd);
+			}
+			else if (ev.ref_id == TBIDC("rgb font Orangutang"))
+			{
+				TBFontDescription fd = edit->GetCalculatedFontDescription();
+				fd.SetID(TBIDC("Orangutang"));
+				edit->SetFontDescription(fd);
+			}
+			else if (ev.ref_id == TBIDC("rgb font Orange"))
+			{
+				TBFontDescription fd = edit->GetCalculatedFontDescription();
+				fd.SetID(TBIDC("Orange"));
+				edit->SetFontDescription(fd);
+			}
+			else if (ev.ref_id == TBIDC("CJK"))
+			{
+				TBTempBuffer buf;
+				for (int i = 0, cp = 0x4E00; cp <= 0x9FCC; cp++, i++)
+				{
+					char utf8[8];
+					int len = utf8::encode(cp, utf8);
+					buf.Append(utf8, len);
+					if (i % 64 == 63)
+						buf.Append("\n", 1);
+				}
+				edit->GetStyleEdit()->SetText(buf.GetData(), buf.GetAppendPos());
+			}
+			else if (ev.ref_id == TBIDC("toggle wrapping"))
+				edit->SetWrapping(!edit->GetWrapping());
+			else if (ev.ref_id == TBIDC("align left"))
+				edit->SetTextAlign(TB_TEXT_ALIGN_LEFT);
+			else if (ev.ref_id == TBIDC("align center"))
+				edit->SetTextAlign(TB_TEXT_ALIGN_CENTER);
+			else if (ev.ref_id == TBIDC("align right"))
+				edit->SetTextAlign(TB_TEXT_ALIGN_RIGHT);
+			return true;
+		}
+	}
+	return DemoWindow::OnEvent(ev);
 }
 
 // == LayoutWindow ============================================================
@@ -754,7 +754,7 @@ bool ScrollContainerWindow::OnEvent(const TBWidgetEvent &ev)
 		}
 		else if (ev.target->GetID() == TBIDC("new buttons"))
 		{
-			for(int i = 0; i < ev.target->data.GetInt(); i++)
+			for (int i = 0; i < ev.target->data.GetInt(); i++)
 			{
 				TBStr str;
 				str.SetFormatted("Remove %d", i);
@@ -767,7 +767,7 @@ bool ScrollContainerWindow::OnEvent(const TBWidgetEvent &ev)
 		}
 		else if (ev.target->GetID() == TBIDC("new buttons delayed"))
 		{
-			for(int i = 0; i < ev.target->data.GetInt(); i++)
+			for (int i = 0; i < ev.target->data.GetInt(); i++)
 			{
 				TBMessageData *data = new TBMessageData();
 				data->id1 = ev.target->GetParent()->GetID();
@@ -924,8 +924,8 @@ void MainWindow::OnMessageReceived(TBMessage *msg)
 	{
 		TBStr text;
 		text.SetFormatted("Delayed message received!\n\n"
-							"It was received %d ms after its intended fire time.",
-							(int)(TBSystem::GetTimeMS() - msg->GetFireTime()));
+			"It was received %d ms after its intended fire time.",
+			(int)(TBSystem::GetTimeMS() - msg->GetFireTime()));
 		TBMessageWindow *msg_win = new TBMessageWindow(this, TBIDC(""));
 		msg_win->Show("Message window", text);
 	}
@@ -956,7 +956,7 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 					PostMessage(TBIDC("busy"), nullptr);
 					TBMessageWindow *msg_win = new TBMessageWindow(this, TBIDC("test_dialog"));
 					msg_win->Show("Message window", "The message loop is now constantly busy with messages to process.\n\n"
-								"The main thread should be working hard, but input & animations should still be running smoothly.");
+						"The main thread should be working hard, but input & animations should still be running smoothly.");
 				}
 			}
 			else
@@ -1010,8 +1010,8 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 			g_renderer->InvokeContextRestored();
 			TBMessageWindow *msg_win = new TBMessageWindow(ev.target, TBID());
 			msg_win->Show("Context lost & restore",
-							"Called InvokeContextLost and InvokeContextRestored.\n\n"
-							"Does everything look fine?");
+				"Called InvokeContextLost and InvokeContextRestored.\n\n"
+				"Does everything look fine?");
 			return true;
 		}
 		else if (ev.target->GetID() == TBIDC("test-layout"))
@@ -1071,9 +1071,9 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 #else
 			TBMessageWindow *msg_win = new TBMessageWindow(ev.target, TBID());
 			msg_win->Show("Debug settings",
-							"Debug settings is only available in builds "
-							"compiled with TB_RUNTIME_DEBUG_INFO defined.\n\n"
-							"Debug builds enable this by default.");
+				"Debug settings is only available in builds "
+				"compiled with TB_RUNTIME_DEBUG_INFO defined.\n\n"
+				"Debug builds enable this by default.");
 #endif
 			return true;
 		}
@@ -1115,7 +1115,7 @@ void TBDemo::Destroy()
 
 void TBDemo::Init()
 {
-    // Block new animations during Init.
+	// Block new animations during Init.
 	TBAnimationBlocker anim_blocker;
 
 	// Run unit tests
@@ -1146,17 +1146,17 @@ void TBDemo::Init()
 	// Give the first item a skin image
 	popup_menu_source.GetItem(0)->SetSkinImage(TBIDC("Icon16"));
 
-    new MainWindow( &UTBRendererBatcher::Singleton().Root() );
+	new MainWindow(&UTBRendererBatcher::Singleton().Root());
 
-    new EditWindow( &UTBRendererBatcher::Singleton().Root() );
+	new EditWindow(&UTBRendererBatcher::Singleton().Root());
 
-    new ListWindow( &UTBRendererBatcher::Singleton().Root(), &name_source );
+	new ListWindow(&UTBRendererBatcher::Singleton().Root(), &name_source);
 
-    new AdvancedListWindow( &UTBRendererBatcher::Singleton().Root(), &advanced_source );
+	new AdvancedListWindow(&UTBRendererBatcher::Singleton().Root(), &advanced_source);
 
-    new TabContainerWindow( &UTBRendererBatcher::Singleton().Root() );
+	new TabContainerWindow(&UTBRendererBatcher::Singleton().Root());
 
-	if ( num_failed_tests )
+	if (num_failed_tests)
 	{
 		TBStr text;
 		text.SetFormatted("There is %d failed tests!\nCheck the output for details.", num_failed_tests);

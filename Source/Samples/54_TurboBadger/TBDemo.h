@@ -7,16 +7,16 @@
 // the rights to use, copy, modify, merge, publish, distribute, sublicense,
 // and/or sell copies of the Software, and to permit persons to whom the
 // Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 // THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 //
 //=============================================================================
@@ -45,7 +45,7 @@ public:
 	ResourceItem(TBWidget *widget, const char *str);
 	TBWidget *GetWidget() { return m_widget; }
 private:
-	TBWidget *m_widget;
+	TBWidget * m_widget;
 };
 
 class ResourceEditWindow : public TBWindow, public TBMessageHandler, public TBWidgetListener
@@ -82,7 +82,7 @@ public:
 	virtual void OnWidgetAdded(TBWidget *parent, TBWidget *child);
 	virtual void OnWidgetRemove(TBWidget *parent, TBWidget *child);
 private:
-	TBSelectList *m_widget_list;
+	TBSelectList * m_widget_list;
 	TBSelectItemSourceList<ResourceItem> m_widget_list_source;
 	TBScrollContainer *m_scroll_container;
 	TBWidget *m_build_container;
@@ -223,7 +223,7 @@ public:
 	AdvancedListWindow(TBWidget *root, AdvancedItemSource *source);
 	virtual bool OnEvent(const TBWidgetEvent &ev);
 private:
-	AdvancedItemSource *m_source;
+	AdvancedItemSource * m_source;
 };
 
 /** AdvancedItemWidget is the widget representing a AdvancedItem.
@@ -235,7 +235,7 @@ public:
 	AdvancedItemWidget(AdvancedItem *item, AdvancedItemSource *source, TBSelectItemViewer *source_viewer, int index);
 	virtual bool OnEvent(const TBWidgetEvent &ev);
 private:
-	AdvancedItemSource *m_source;
+	AdvancedItemSource * m_source;
 	TBSelectItemViewer *m_source_viewer;
 	int m_index;
 };
@@ -246,6 +246,6 @@ private:
 class TBDemo
 {
 public:
-    static void Init();
-    static void Destroy();
+	static void Init();
+	static void Destroy();
 };

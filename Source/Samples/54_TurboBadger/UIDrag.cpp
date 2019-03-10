@@ -30,136 +30,136 @@
 
 //=============================================================================
 //=============================================================================
-DEFINE_APPLICATION_MAIN(UIDrag)
+URHO3D_DEFINE_APPLICATION_MAIN(UIDrag)
 
 
 //=============================================================================
 //=============================================================================
-UIDrag::UIDrag(Context* context) 
-    : Sample(context)
-    , pTBListener_( NULL )
+UIDrag::UIDrag(Context* context)
+	: Sample(context)
+	, pTBListener_(NULL)
 {
 }
 
 UIDrag::~UIDrag()
 {
-    if ( pTBListener_ )
-    {
-        delete pTBListener_;
-        pTBListener_ = NULL;
-    }
+	if (pTBListener_)
+	{
+		delete pTBListener_;
+		pTBListener_ = NULL;
+	}
 }
 
 //=============================================================================
 //=============================================================================
 void UIDrag::Setup()
 {
-    // Modify engine startup parameters
-    engineParameters_["WindowTitle"] = GetTypeName();
-    engineParameters_["LogName"]     = GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
-    engineParameters_["FullScreen"]  = false;
-    engineParameters_["Headless"]    = false;
-    engineParameters_["WindowWidth"] = 1280; 
-    engineParameters_["WindowHeight"] = 720;
+	// Modify engine startup parameters
+	engineParameters_["WindowTitle"] = GetTypeName();
+	engineParameters_["LogName"] = GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
+	engineParameters_["FullScreen"] = false;
+	engineParameters_["Headless"] = false;
+	engineParameters_["WindowWidth"] = 1280;
+	engineParameters_["WindowHeight"] = 720;
 }
 
 //=============================================================================
 //=============================================================================
 void UIDrag::Start()
 {
-    // Execute base class startup
-    Sample::Start();
+	// Execute base class startup
+	Sample::Start();
 
-    // Set mouse visible
-    String platform = GetPlatform();
-    if (platform != "Android" && platform != "iOS")
-        GetSubsystem<Input>()->SetMouseVisible(true);
+	// Set mouse visible
+	String platform = GetPlatform();
+	if (platform != "Android" && platform != "iOS")
+		GetSubsystem<Input>()->SetMouseVisible(true);
 
-    // create TB render batcher
-    Graphics *graphics = GetSubsystem<Graphics>();
-    UTBRendererBatcher::Create( GetContext(), graphics->GetWidth(), graphics->GetHeight() );
-    UTBRendererBatcher::Singleton().Init( "Data/TB/" );
-    
-    // create a msg win
-    pTBListener_ = new UTBListener( GetContext() );
-    pTBListener_->CreateMsgWindow();
+	// create TB render batcher
+	Graphics *graphics = GetSubsystem<Graphics>();
+	UTBRendererBatcher::Create(GetContext(), graphics->GetWidth(), graphics->GetHeight());
+	UTBRendererBatcher::Singleton().Init("Data/tb/");
 
-    SubscribeToEvent(E_TBMSG, HANDLER(UIDrag, HandleTBMessage));
+	// create a msg win
+	pTBListener_ = new UTBListener(GetContext());
+	pTBListener_->CreateMsgWindow();
+
+	SubscribeToEvent(E_TBMSG, URHO3D_HANDLER(UIDrag, HandleTBMessage));
 }
 
 void UIDrag::Stop()
 {
-    TBDemo::Destroy();
-    UTBRendererBatcher::Destroy();
-    Sample::Stop();
+	TBDemo::Destroy();
+	UTBRendererBatcher::Destroy();
+	Sample::Stop();
 }
 
 void UIDrag::HandleTBMessage(StringHash eventType, VariantMap& eventData)
 {
-    using namespace TBMessageNamespace;
+	using namespace TBMessageNamespace;
 
-    TBWidget *pTBWidget = (TBWidget*)eventData[P_TBWIDGET].GetVoidPtr();
+	TBWidget *pTBWidget = (TBWidget*)eventData[P_TBWIDGET].GetVoidPtr();
 
-    if ( pTBListener_->GetTBMessageWidget() == pTBWidget )
-    {
-        TBDemo::Init();
-    }
+	if (pTBListener_->GetTBMessageWidget() == pTBWidget)
+	{
+		TBDemo::Init();
+	}
 }
 
 //=============================================================================
 //=============================================================================
 UTBListener::UTBListener(Context *context)
-    : Object(context)
-    , pTBMessageWindow_( NULL )
+	: Object(context)
+	, pTBMessageWindow_(NULL)
 {
 }
 
 UTBListener::~UTBListener()
 {
-    if ( pTBMessageWindow_ )
-    {
-        pTBMessageWindow_ = NULL;
-    }
+	if (pTBMessageWindow_)
+	{
+		pTBMessageWindow_ = NULL;
+	}
 }
 
 void UTBListener::CreateMsgWindow()
 {
-    TBStr text("\nHellow World from Turbo Badger.\n\nClick OK to get started.");
-    pTBMessageWindow_ = new TBMessageWindow( &UTBRendererBatcher::Singleton().Root(), TBIDC("") );
-    pTBMessageWindow_->Show("Start Message", text);
+	TBStr text("\nHellow World from Turbo Badger.\n\nClick OK to get started.");
+	pTBMessageWindow_ = new TBMessageWindow(&UTBRendererBatcher::Singleton().Root(), TBIDC(""));
+	pTBMessageWindow_->Show("Start Message", text);
 
-    TBWidgetListener::AddGlobalListener( this );
+	TBWidgetListener::AddGlobalListener(this);
 }
 
 void UTBListener::OnWidgetRemove(TBWidget *parent, TBWidget *child)
 {
-    if ( pTBMessageWindow_ == child )
-    {
-        TBWidgetListener::RemoveGlobalListener( this );
-    }
+	if (pTBMessageWindow_ == child)
+	{
+		TBWidgetListener::RemoveGlobalListener(this);
+	}
 }
 
-bool UTBListener::OnWidgetInvokeEvent(TBWidget *widget, const TBWidgetEvent &ev) 
-{ 
-    if ( pTBMessageWindow_ && pTBMessageWindow_ == ev.target )
-    {
-        if ( ev.type == EVENT_TYPE_CLICK )
-        {
-            TBWidgetListener::RemoveGlobalListener( this );
+bool UTBListener::OnWidgetInvokeEvent(TBWidget *widget, const TBWidgetEvent &ev)
+{
+	if (pTBMessageWindow_ && pTBMessageWindow_ == ev.target)
+	{
+		if (ev.type == EVENT_TYPE_CLICK)
+		{
+			TBWidgetListener::RemoveGlobalListener(this);
 
-            SendEventMsg();
-        }
-    }
+			SendEventMsg();
+		}
+	}
 
-    return false; 
+	return false;
 }
 
 void UTBListener::SendEventMsg()
 {
-    using namespace TBMessageNamespace;
+	using namespace TBMessageNamespace;
 
-    VariantMap& eventData = GetEventDataMap();
-    eventData[P_TBWIDGET] = GetTBMessageWidget();
+	VariantMap& eventData = GetEventDataMap();
+	eventData[P_TBWIDGET] = GetTBMessageWidget();
 
-    SendEvent( E_TBMSG, eventData );
+	SendEvent(E_TBMSG, eventData);
 }

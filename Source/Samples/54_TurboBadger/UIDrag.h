@@ -30,47 +30,47 @@
 
 namespace Urho3D
 {
-class Node;
-class Scene;
+	class Node;
+	class Scene;
 }
 
 namespace tb
 {
-class TBMessageWindow;
+	class TBMessageWindow;
 }
 
 using namespace Urho3D;
 using namespace tb;
 
 //=====================================
-EVENT(E_TBMSG, TBMessageNamespace)
+URHO3D_EVENT(E_TBMSG, TBMessageNamespace)
 {
-    PARAM(P_TBWIDGET, Widget);  // TBWidget pointer
+	URHO3D_PARAM(P_TBWIDGET, Widget);  // TBWidget pointer
 }
 
 //=============================================================================
 //=============================================================================
 class UTBListener : public Object, public TBWidgetListener
 {
-    OBJECT(UTBListener);
+	URHO3D_OBJECT(UTBListener, Object);
 public:
-    UTBListener(Context *context);
+	UTBListener(Context *context);
 
-    ~UTBListener();
+	~UTBListener();
 
-    void CreateMsgWindow();
+	void CreateMsgWindow();
 	virtual void OnWidgetRemove(TBWidget *parent, TBWidget *child);
 	virtual bool OnWidgetInvokeEvent(TBWidget *widget, const TBWidgetEvent &ev);
 
-    TBWidget* GetTBMessageWidget()
-    {
-        return (TBWidget*)pTBMessageWindow_;
-    }
+	TBWidget* GetTBMessageWidget()
+	{
+		return (TBWidget*)pTBMessageWindow_;
+	}
 protected:
-    void SendEventMsg();
+	void SendEventMsg();
 
 protected:
-    TBMessageWindow     *pTBMessageWindow_;
+	TBMessageWindow * pTBMessageWindow_;
 
 };
 
@@ -83,30 +83,31 @@ protected:
 ///     - Subscribing to GUI drag events and handling them.
 class UIDrag : public Sample
 {
-    OBJECT(UIDrag);
+	URHO3D_OBJECT(UIDrag, Sample);
 
 public:
-    /// Construct.
-    UIDrag(Context* context);
-    ~UIDrag();
+	/// Construct.
+	UIDrag(Context* context);
+	~UIDrag();
 
-    /// Setup after engine initialization and before running the main loop.
-    virtual void Setup();
-    virtual void Start();
-    virtual void Stop();
+	/// Setup after engine initialization and before running the main loop.
+	virtual void Setup();
+	virtual void Start();
+	virtual void Stop();
 
 protected:
-    void HandleTBMessage(StringHash eventType, VariantMap& eventData);
+	void HandleTBMessage(StringHash eventType, VariantMap& eventData);
 
-    /// Return XML patch instructions for screen joystick layout for a specific sample app, if any.
-    virtual String GetScreenJoystickPatchString() const { return
-        "<patch>"
-        "    <add sel=\"/element/element[./attribute[@name='Name' and @value='Hat0']]\">"
-        "        <attribute name=\"Is Visible\" value=\"false\" />"
-        "    </add>"
-        "</patch>";
-    }
+	/// Return XML patch instructions for screen joystick layout for a specific sample app, if any.
+	virtual String GetScreenJoystickPatchString() const {
+		return
+			"<patch>"
+			"    <add sel=\"/element/element[./attribute[@name='Name' and @value='Hat0']]\">"
+			"        <attribute name=\"Is Visible\" value=\"false\" />"
+			"    </add>"
+			"</patch>";
+	}
 
-    UTBListener     *pTBListener_;
+	UTBListener     *pTBListener_;
 
 };
